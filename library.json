@@ -1,0 +1,12 @@
+{
+  "name": "aurora physics+",  
+  "version": "0.0.1",  
+  "website": "",  
+  "gitUrl": "",  
+  "authors": [ "eldritchcookie" ],  
+  "license": "AGPL 3.0",  
+  "namespace": "aurora.physics.plus",  
+  "description": "aurora physics+ is a indie ttrpg made for maptool",  
+  "shortDescription": "aurora physics+ framework",  
+  "allowsUriAccess": true
+}

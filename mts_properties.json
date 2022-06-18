@@ -1,0 +1,9 @@
+{
+  "properties":[
+    {
+    "filename":"public/testMacro.mts",
+    "autoExecute":true,
+    "description":"<b>a test macro with bold text</b> testing"
+    }
+  ]
+}
