@@ -1,20 +1,59 @@
 <!DOCTYPE HTML>
 <document>
   <head>
-    <link rel="stylesheet" href="css.css">
-    <script src="../frame.js" defer>
-      
+    <link rel="stylesheet" href="css.css?cachelib=false">
+    <script src="../common.js?cachelib=false" defer>
     </script>
-    <script src="main.js" defer>
+    <script src="../frame.js?cachelib=false" defer>
+    </script>
+    <script src="./main.js?cachelib=false" defer>
     </script>
   </head>
   <body>
-    <menu type="toolbar">
-      <button onclick="">combate</button>
-      <button onclick="">texto</button>
-    </menu>
-    <div id="combate">
+    <menu type="toolbar" id="settings" hidden>
       
-    </did>
+    </menu>
+    <menu type="context" id="menu">
+      <button>combat</button>
+      <button>statistics</button>
+      <button>skills</button>
+      <button>caracteristics</button>
+      <button>settings</button>
+    </menu>
+    <div id="combat section">
+      <span id="combat hp"></span>
+      <span id="combat ep"></span>
+      <table id="combat defenses">
+      </table>
+      <table id="combat skills">
+      </table>
+      <table id="combat advantages">
+      </table>
+    </div>
+    <div id="statistics section" hidden>
+      <span id="life"></span>
+      <span id="stamina"></span>
+      <span id="agility"></span>
+      <span id="strength"></span>
+      <span id="intelligence"></span>
+      <span id="movement"></span>
+      <span id="resources"></span>
+      <span id="defenses">
+      <span id="constitution"></span>
+      <span id="will"></span>
+      </span>
+      <table id="affinity"></table>
+      <table id="resistances"></table>
+    </div>    
+    <div id="skills section" hidden>
+      <table id="skills">
+        
+      </table>
+    </div>
+    <div id="caracteristics section" hidden>
+      <table id="caracteristics">
+        
+      </table>
+    </div>
   </body>
 </document>
