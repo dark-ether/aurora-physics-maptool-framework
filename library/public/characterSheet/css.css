@@ -1,3 +1,20 @@
-p {
-  color: rgb(255,0,0);
+body{
+	padding:0px;
+	margin:0px;
+}
+#menu{
+	padding:0px;
+	margin:0px;
+	background-color:rgb(12, 210, 233); 
+	border:0px
+}
+#menu > button{
+	padding:0em;
+	margin:0em;
+	background-color:rgb(12, 210, 233);
+	border:0px;
+}
+#menu > button:hover{
+	background-color: red;
+	color:white;
 }

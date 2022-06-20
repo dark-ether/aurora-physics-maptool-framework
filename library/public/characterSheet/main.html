@@ -1,7 +1,8 @@
 <!DOCTYPE HTML>
 <document>
   <head>
-    <link rel="stylesheet" href="css.css?cachelib=false">
+    <link rel="stylesheet" type="text/css" href="lib://test/macro/css.css?cachelib=false">
+    <link rel="stylesheet" type="text/css" href="./css.css">
     <script src="../common.js?cachelib=false" defer>
     </script>
     <script src="../frame.js?cachelib=false" defer>
@@ -14,11 +15,11 @@
       
     </menu>
     <menu type="context" id="menu">
-      <button>combat</button>
-      <button>statistics</button>
-      <button>skills</button>
-      <button>caracteristics</button>
-      <button>settings</button>
+      <button id="combat button">combat</button>
+      <button id="statistics button">statistics</button>
+      <button id="skill button">skills</button>
+      <button id="caracteristics button">caracteristics</button>
+      <button id="settings button">settings</button>
     </menu>
     <div id="combat section">
       <span id="combat hp"></span>
@@ -30,7 +31,7 @@
       <table id="combat advantages">
       </table>
     </div>
-    <div id="statistics section" hidden>
+    <div id="statistics section">
       <span id="life"></span>
       <span id="stamina"></span>
       <span id="agility"></span>
@@ -38,19 +39,19 @@
       <span id="intelligence"></span>
       <span id="movement"></span>
       <span id="resources"></span>
-      <span id="defenses">
+      <span id="defenses"></span>
       <span id="constitution"></span>
       <span id="will"></span>
       </span>
       <table id="affinity"></table>
       <table id="resistances"></table>
     </div>    
-    <div id="skills section" hidden>
+    <div id="skills section">
       <table id="skills">
         
       </table>
     </div>
-    <div id="caracteristics section" hidden>
+    <div id="caracteristics section">
       <table id="caracteristics">
         
       </table>

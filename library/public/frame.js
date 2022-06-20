@@ -5,7 +5,7 @@ async function getPlayerName() {
   let reqObj = {
     "method":"POST"
   }
-  let resp = await fetch("macro:getPlayerName"+libName,reqObj);
+  let resp = await fetch("macro:frameMacros/getPlayerName"+libName,reqObj);
   let text = await resp.text();
   return text;
 }
@@ -17,7 +17,7 @@ async function getLibProperty(property) {
       "property":property
     })
   }
-  let resp = await fetch("macro:getLibProperty"+libName,reqObj)
+  let resp = await fetch("macro:frameMacros/getLibProperty"+libName,reqObj)
   let result = await resp.text();
   return result;
 }
@@ -30,7 +30,7 @@ async function setLibProperty(property,value) {
       "value":value
     })
   }
-  let resp = await fetch("macro:setLibProperty"+libName,reqObj);
+  let resp = await fetch("macro:frameMacros/setLibProperty"+libName,reqObj);
   let text = await resp.text();
   return text;
 }
@@ -60,6 +60,10 @@ async function translateDocument() {
       element.innerHTML = translationObject[textToTranslate];
     }
   }
+}
+
+async function getPlayerToken(){
+  return await fetch("macro:frameMacros/getPlayerToken"+libName,{"method":"POST"});
 }
 
 try{
