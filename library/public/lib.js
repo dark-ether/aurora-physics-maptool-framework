@@ -1,5 +1,5 @@
 "use strict";
-let prefix = "aurora."
+const prefix = "aurora."
 function getPlayerName(){
   return MTScript.execMacro("[r:getPlayerName()]");
 }
@@ -68,7 +68,7 @@ function resetToken(tokenId){
     currentResources:0,
     constitution:0,
     will:0
-  });)
+  }));
   token.setProperty(prefix+"battle",JSON.stringify({
     hp:0,
     ep:0,

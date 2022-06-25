@@ -52,7 +52,7 @@ async function translateDocument() {
   if(language == ""){
     language = "portugues";
   }
-  const translationObject = await getLibProperty("translation."+language);
+  let translationObject = await getLibProperty("translation."+language);
   translationObject =  JSON.parse(translationObject);
   const elementList = document.body.querySelectorAll("*");
   for(const element of elementList){
@@ -103,7 +103,7 @@ async function callMTFunc(funcName,...args){
   return await resp.text();
 }
 
-function buildTable(headers,id,values){
+function buildTableInId(headers,id,values){
   const table = document.getElementById(id);
   const tHead = table.createTHead();
   const tHeaders = tHead.insertRow(0);
@@ -111,11 +111,12 @@ function buildTable(headers,id,values){
     const headerElement = tHeaders.insertCell(-1);
     headerElement.innerText = header;
   }
-  const tBody = table.createTBody();
+  const tBody = document.createElement("tbody");
+  table.appendChild(tBody);
   for(const value of values){
-    const elementRow = tBody.insertRow(-1);
+    const elementRow = table.insertRow(-1);
     for(const header of headers){
-      let cellText = "gave object without value to table builder:"+(new Error()).stack;
+      let cellText = "gave object without !"+header+"! property  at:";
       if(header in value){
         cellText = value[header];
       }
@@ -124,9 +125,16 @@ function buildTable(headers,id,values){
     }
   }
 }
+function deleteTableInId(id){
+  const table = document.getElementById(id);
+  table.deleteTHead();
+  while(table.TBodies.length > 0){
+    table.removeChild[table.TBodies.item(0)];
+  }
+}
+
 try{
   translateDocument().catch(e=> console.log(""+e+"\n"+e.stack));
-  buildTable(["test","sucess"],"affinity",[{test:"sucess",sucess:"affinity"},{test:"my test"}]);
 }
 catch(e){
   console.log(""+e+"\n"+e.stack);
