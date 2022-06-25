@@ -1,5 +1,6 @@
 "use strict";
 let libName = "@lib:aurora.physics.plus";
+let tpmacro = "macro:frameMacros/getTokenProperty"+libName;
 
 async function getPlayerName() {
   let reqObj = {
@@ -63,7 +64,73 @@ async function translateDocument() {
 }
 
 async function getPlayerToken(){
-  return await fetch("macro:frameMacros/getPlayerToken"+libName,{"method":"POST"});
+  let resp = await fetch("macro:frameMacros/getPlayerToken"+libName,{"method":"POST"});
+  return await resp.text();
+}
+
+async function getTokenStatistics(tokenId) {
+  let reqObj = {
+    "method":"POST",
+    "body":JSON.stringify({
+      "token":tokenId,
+      "property":"aurora.statistics",
+    })
+  }
+  let resp = await fetch(tpmacro,reqObj);
+  return await resp.json();
+}
+
+async function getTokenBattleStatistics(tokenId) {
+  let reqObj = {
+    "method":"POST",
+    "body":JSON.stringify({
+      "token":tokenId,
+      "property":"aurora.battle"
+    })
+  }
+  let resp = await fetch(tpmacro,reqObj);
+  return await res.json;
+}
+
+async function getTokenSkills(tokenId) {
+  let reqObj = {
+    method:"POST",
+    body:JSON.stringify({
+      token:tokenId,
+      property:"aurora.skills"
+    })
+  }
+  let resp = await fetch(tpmacro,reqObj)
+  return await resp.json();
+}
+
+async function getTokenCaracteristics(tokenId){
+  let reqObj = {
+    "method":"POST",
+    "body":JSON.stringify({
+      "token":tokenId,
+      "property":"aurora.caracteristics"
+    })
+  }
+  let resp = await fetch(tpmacro,reqObj);
+  return await resp.json();
+}
+
+async function callMTFunc(funcName,...args){
+  let reqObj = {
+    "method":"POST",
+    "body":JSON.strigify({funcName:funcName,args:args})
+  }
+  let resp = await fetch("macro:frameMacros/callMTFunc"+libName,reqObj);
+  if(!resp.ok){
+    console.trace("error in callMTFunc");
+  }
+  return await resp.text();
+}
+
+function createTokenUpdateEvent(toUpdate){
+  const event = new CustomEvent("tokenUpdate",{detail:toUpdate})
+  return event;
 }
 
 try{

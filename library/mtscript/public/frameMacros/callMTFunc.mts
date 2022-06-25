@@ -1,0 +1,11 @@
+[h: funcName = json.get(macro.args,"funcName")]
+[h: args = json.get(macro.args,"args")]
+[h: argsLen = json.length(args)]
+[h:macroToEval = strformat("%s(%s)",funcName)]
+[h,for(i,0,argsLen - 1,1,""),CODE:{
+  [h:arg = json.get(args,i)]
+  [h:macroToEval = strformat(macroToEval,"'"+arg+"',%s")]
+}]
+[h:last = json.get(args,argsLen - 1)]
+[h:macroToEval = strFormat(macroToEval,"'"+last+"')")]
+[r:execMacro(macroToEval)]

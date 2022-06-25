@@ -1,29 +1,27 @@
 const charSheetInfo = {
   id:"",
-  skills:[],
-  caracteristics:[],
+  statistics:{},
+  battle:{},
+  affinity:[],
+  resistances:[],
+  senses:[],
   powers:[],
-  life:0,
-  stamina:0,
-  agility:0,
-  intelligence:0,
-  movement:0,
-  resources:0,
-  strength:0,
-  affinity:{},
-  constitution:0,
-  will:0,
-  resistances:{},
-  senses:{},
-  equipment:[]
+  caracteristics:[],
+  skills:[],
+  equipment:[],
+  handleEvent: async function (event){
+    let toUpdate = event.detail.toUpdate;
+    for(let i = 0; i < toUpdate.length;i++){
+    }
+  }
 }
-function initializeCharSheet(){
-  charSheetInfo.id = getPlayerToken();
-  
-}
-function updateCharSheet(){}
-try {
-  
-} catch (e) {
-  console.log(""+e+"\n"+e.stack);
+
+async function initializeCharSheet(){
+  charSheetInfo.id = await getPlayerToken();
+  if(charSheetInfo.id == ""){
+    callMTFunc("closeFrame","aurora physics character sheet");
+    return;
+  } 
+  document.addEventListener("tokenUpdate",charSheetInfo);
+
 }
