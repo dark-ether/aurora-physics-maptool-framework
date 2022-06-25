@@ -1,49 +1,49 @@
 "use strict";
-let libName = "@lib:aurora.physics.plus";
-let tpmacro = "macro:frameMacros/getTokenProperty"+libName;
+const libName = "@lib:aurora.physics.plus";
+const tpmacro = "macro:frameMacros/getTokenProperty"+libName;
 
 async function getPlayerName() {
-  let reqObj = {
+  const reqObj = {
     "method":"POST"
   }
-  let resp = await fetch("macro:frameMacros/getPlayerName"+libName,reqObj);
-  let text = await resp.text();
+  const resp = await fetch("macro:frameMacros/getPlayerName"+libName,reqObj);
+  const text = await resp.text();
   return text;
 }
 
 async function getLibProperty(property) {
-  let reqObj = {
+  const reqObj = {
     "method":"POST",
     "body": JSON.stringify({
       "property":property
     })
   }
-  let resp = await fetch("macro:frameMacros/getLibProperty"+libName,reqObj)
-  let result = await resp.text();
+  const resp = await fetch("macro:frameMacros/getLibProperty"+libName,reqObj)
+  const result = await resp.text();
   return result;
 }
 
 async function setLibProperty(property,value) {
-  let reqObj = {
+  const reqObj = {
     "method":"POST",
     "body":JSON.stringify({
       "property":property,
       "value":value
     })
   }
-  let resp = await fetch("macro:frameMacros/setLibProperty"+libName,reqObj);
-  let text = await resp.text();
+  const resp = await fetch("macro:frameMacros/setLibProperty"+libName,reqObj);
+  const text = await resp.text();
   return text;
 }
 
 async function getPlayerProp(prop) {
-  let player = await getPlayerName();
-  let playerProp = await getLibProperty(player+"."+prop);
+  const player = await getPlayerName();
+  const playerProp = await getLibProperty(player+"."+prop);
   return playerProp;
 }
 
 async function setPlayerProp(prop,value) {
-  let player = await getPlayerName();
+  const player = await getPlayerName();
   return setLibProperty(player+"."+prop,value);
 }
 
@@ -52,89 +52,81 @@ async function translateDocument() {
   if(language == ""){
     language = "portugues";
   }
-  let translationObject = await getLibProperty("translation."+language);
+  const translationObject = await getLibProperty("translation."+language);
   translationObject =  JSON.parse(translationObject);
-  let elementList = document.body.querySelectorAll("*");
-  for(let element of elementList){
-    let textToTranslate = element.innerHTML;
+  const elementList = document.body.querySelectorAll("*");
+  for(const element of elementList){
+    const textToTranslate = element.innerText;
     if(textToTranslate in translationObject){
-      element.innerHTML = translationObject[textToTranslate];
+      element.innerText = translationObject[textToTranslate];
     }
   }
 }
 
 async function getPlayerToken(){
-  let resp = await fetch("macro:frameMacros/getPlayerToken"+libName,{"method":"POST"});
+  const resp = await fetch("macro:frameMacros/getPlayerToken"+libName,{"method":"POST"});
   return await resp.text();
 }
 
-async function getTokenStatistics(tokenId) {
-  let reqObj = {
+async function getTokenProperty(tokenId,property) {
+  const reqObj = {
     "method":"POST",
     "body":JSON.stringify({
       "token":tokenId,
-      "property":"aurora.statistics",
+      "property":property,
     })
   }
-  let resp = await fetch(tpmacro,reqObj);
-  return await resp.json();
+  const resp = await fetch(tpmacro,reqObj);
+  return await resp.text();
 }
-
-async function getTokenBattleStatistics(tokenId) {
-  let reqObj = {
+async function getTokenJSON(tokenId,property) {
+  const reqObj = {
     "method":"POST",
     "body":JSON.stringify({
       "token":tokenId,
-      "property":"aurora.battle"
+      "property":property,
     })
   }
-  let resp = await fetch(tpmacro,reqObj);
-  return await res.json;
-}
-
-async function getTokenSkills(tokenId) {
-  let reqObj = {
-    method:"POST",
-    body:JSON.stringify({
-      token:tokenId,
-      property:"aurora.skills"
-    })
-  }
-  let resp = await fetch(tpmacro,reqObj)
-  return await resp.json();
-}
-
-async function getTokenCaracteristics(tokenId){
-  let reqObj = {
-    "method":"POST",
-    "body":JSON.stringify({
-      "token":tokenId,
-      "property":"aurora.caracteristics"
-    })
-  }
-  let resp = await fetch(tpmacro,reqObj);
+  const resp = await fetch(tpmacro,reqObj);
   return await resp.json();
 }
 
 async function callMTFunc(funcName,...args){
-  let reqObj = {
+  const reqObj = {
     "method":"POST",
     "body":JSON.strigify({funcName:funcName,args:args})
   }
-  let resp = await fetch("macro:frameMacros/callMTFunc"+libName,reqObj);
+  const resp = await fetch("macro:frameMacros/callMTFunc"+libName,reqObj);
   if(!resp.ok){
     console.trace("error in callMTFunc");
   }
   return await resp.text();
 }
 
-function createTokenUpdateEvent(toUpdate){
-  const event = new CustomEvent("tokenUpdate",{detail:toUpdate})
-  return event;
+function buildTable(headers,id,values){
+  const table = document.getElementById(id);
+  const tHead = table.createTHead();
+  const tHeaders = tHead.insertRow(0);
+  for(const header of headers){
+    const headerElement = tHeaders.insertCell(-1);
+    headerElement.innerText = header;
+  }
+  const tBody = table.createTBody();
+  for(const value of values){
+    const elementRow = tBody.insertRow(-1);
+    for(const header of headers){
+      let cellText = "gave object without value to table builder:"+(new Error()).stack;
+      if(header in value){
+        cellText = value[header];
+      }
+      const cell = elementRow.insertCell(-1);
+      cell.innerText = cellText;
+    }
+  }
 }
-
 try{
   translateDocument().catch(e=> console.log(""+e+"\n"+e.stack));
+  buildTable(["test","sucess"],"affinity",[{test:"sucess",sucess:"affinity"},{test:"my test"}]);
 }
 catch(e){
   console.log(""+e+"\n"+e.stack);
